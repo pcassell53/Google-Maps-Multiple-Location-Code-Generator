@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Generate a responsive click-to-load multi-location Google Maps widget using dealership names, addresses, and optional website links.">
+    <title>Multiple Google Map Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="gmgen-page">
+        <section class="gmgen-hero" aria-labelledby="gmgenPageTitle">
+            <div class="gmgen-container gmgen-hero-grid">
+                <div class="gmgen-hero-copy">
+                    <span class="gmgen-eyebrow">Dealer Website Tool</span>
+                    <h1 id="gmgenPageTitle">Multiple Google Map Generator</h1>
+                    <p>
+                        Build a responsive, click-to-load multi-location map widget from simple dealership inputs. Add a name, address, and optional website URL, then copy the generated code into a custom page.
+                    </p>
+                    <div class="gmgen-hero-actions">
+                        <a class="gmgen-btn" href="#generatorForm">Start Generating</a>
+                        <a class="gmgen-btn gmgen-btn-outline" href="#generatedCode">View Output</a>
+                    </div>
+                </div>
+                <div class="gmgen-hero-card" aria-label="Generator highlights">
+                    <h2>What it generates</h2>
+                    <ul>
+                        <li><span>01</span> Responsive location cards</li>
+                        <li><span>02</span> Click-to-load map iframe</li>
+                        <li><span>03</span> Optional website buttons</li>
+                        <li><span>04</span> OEM color variable support</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="gmgen-section" id="generatorForm">
+            <div class="gmgen-container">
+                <div class="gmgen-section-heading">
+                    <span class="gmgen-eyebrow">Generator</span>
+                    <h2>Create your map widget</h2>
+                    <p>
+                        The generated widget does not include a <code>:root</code> CSS block. It uses the site’s existing <code>--cta-background-color</code>, <code>--cta-font-color</code>, <code>--cta-hover-color</code>, and <code>--main-color</code> values, with safe fallback colors.
+                    </p>
+                </div>
+
+                <div class="gmgen-layout">
+                    <div class="gmgen-column">
+                        <section class="gmgen-panel" aria-labelledby="widgetSettingsTitle">
+                            <h3 id="widgetSettingsTitle">Widget Settings</h3>
+
+                            <div class="gmgen-field">
+                                <label for="gmgenWidgetTitle">Widget Title</label>
+                                <input id="gmgenWidgetTitle" type="text" value="Map your visit to a dealership.">
+                            </div>
+
+                            <div class="gmgen-field">
+                                <label for="gmgenWidgetIntro">Intro Copy</label>
+                                <textarea id="gmgenWidgetIntro">Select a dealership to view its location, visit the website, and plan your next stop.</textarea>
+                            </div>
+
+                            <div class="gmgen-field">
+                                <label for="gmgenKickerText">Kicker Text</label>
+                                <input id="gmgenKickerText" type="text" value="Find a Location">
+                            </div>
+
+                            <div class="gmgen-field">
+                                <label for="gmgenPlaceholderTitle">Map Placeholder Title</label>
+                                <input id="gmgenPlaceholderTitle" type="text" value="Select a dealership to view the map.">
+                            </div>
+
+                            <div class="gmgen-field">
+                                <label for="gmgenPlaceholderCopy">Map Placeholder Copy</label>
+                                <textarea id="gmgenPlaceholderCopy">Choose a dealership from the list to load directions and start planning your visit.</textarea>
+                            </div>
+
+                            <div class="gmgen-settings-grid">
+                                <div class="gmgen-field">
+                                    <label for="gmgenMapHeight">Map Height</label>
+                                    <input id="gmgenMapHeight" type="number" min="280" max="900" value="560">
+                                    <span class="gmgen-note">Value is output in pixels. Default is 560.</span>
+                                </div>
+
+                                <div class="gmgen-field gmgen-check-field">
+                                    <span class="gmgen-label-text">Map Loading</span>
+                                    <label class="gmgen-check-row">
+                                        <input id="gmgenAutoLoadFirst" type="checkbox">
+                                        <span>Auto-load first map</span>
+                                    </label>
+                                    <span class="gmgen-note">Leave unchecked for better initial page speed.</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="gmgen-panel" aria-labelledby="locationsTitle">
+                            <h3 id="locationsTitle">Locations</h3>
+                            <div id="gmgenLocations"></div>
+
+                            <div class="gmgen-actions">
+                                <button id="gmgenAddLocation" class="gmgen-btn gmgen-btn-muted" type="button">Add Location</button>
+                                <button id="gmgenLoadSample" class="gmgen-btn gmgen-btn-muted" type="button">Load Sample</button>
+                                <button id="gmgenGenerate" class="gmgen-btn" type="button">Generate Widget Code</button>
+                            </div>
+
+                            <div id="gmgenFormStatus" class="gmgen-status" aria-live="polite"></div>
+                        </section>
+                    </div>
+
+                    <div class="gmgen-column">
+                        <section class="gmgen-panel" aria-labelledby="previewTitle">
+                            <div class="gmgen-panel-header">
+                                <h3 id="previewTitle">Live Preview</h3>
+                                <button id="gmgenRefreshPreview" class="gmgen-text-btn" type="button">Refresh Preview</button>
+                            </div>
+                            <div id="gmgenPreview" class="gmgen-preview" aria-live="polite">
+                                <p class="gmgen-preview-empty">Add locations or load the sample, then generate or refresh the preview.</p>
+                            </div>
+                        </section>
+
+                        <section class="gmgen-panel" id="generatedCode" aria-labelledby="outputTitle">
+                            <div class="gmgen-panel-header">
+                                <h3 id="outputTitle">Generated Code</h3>
+                                <button id="gmgenCopy" class="gmgen-text-btn" type="button">Copy Code</button>
+                            </div>
+
+                            <textarea id="gmgenOutput" class="gmgen-output" readonly aria-label="Generated widget code"></textarea>
+
+                            <div class="gmgen-actions">
+                                <button id="gmgenCopyBottom" class="gmgen-btn" type="button">Copy Code</button>
+                                <button id="gmgenClear" class="gmgen-btn gmgen-btn-muted" type="button">Clear Output</button>
+                            </div>
+
+                            <div id="gmgenCopyStatus" class="gmgen-status" aria-live="polite"></div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
